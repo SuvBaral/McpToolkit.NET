@@ -1,0 +1,18 @@
+# Build
+bin/
+obj/
+*.user
+.vs/
+.vscode/
+*.suo
+*.nupkg
+nupkg/
+
+# .NET
+project.lock.json
+*.nuget.props
+*.nuget.targets
+
+# OS
+.DS_Store
+Thumbs.db

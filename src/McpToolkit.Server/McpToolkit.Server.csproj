@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>12</LangVersion>
+    <PackageId>McpToolkit.Server</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>SuvBoral</Authors>
+    <Description>stdio-based MCP server host for .NET. Expose any C# logic as an AI-callable MCP tool over stdin/stdout. Works with Claude Desktop, Claude Code, and any MCP-compatible LLM client.</Description>
+    <PackageTags>mcp;model-context-protocol;ai;server;stdio;anthropic;dotnet;csharp;claude</PackageTags>
+    <PackageProjectUrl>https://github.com/SuvBaral/McpToolkit.NET</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\McpToolkit.Core\McpToolkit.Core.csproj" />
+  </ItemGroup>
+</Project>

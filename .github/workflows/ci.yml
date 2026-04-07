@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore
+        run: dotnet restore McpToolkit.NET.sln
+
+      - name: Build
+        run: dotnet build McpToolkit.NET.sln --no-restore -c Release
+
+      - name: Test
+        run: dotnet test McpToolkit.NET.sln --no-build -c Release --logger "console;verbosity=normal"
+
+  publish-nuget:
+    needs: build-and-test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Pack
+        run: |
+          dotnet pack src/McpToolkit.Core/McpToolkit.Core.csproj -c Release -o ./nupkg
+          dotnet pack src/McpToolkit.Server/McpToolkit.Server.csproj -c Release -o ./nupkg
+
+      - name: Push to NuGet
+        run: |
+          dotnet nuget push ./nupkg/*.nupkg \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
